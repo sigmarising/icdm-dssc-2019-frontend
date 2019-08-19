@@ -1,0 +1,8 @@
+export const state = () => ({
+  title: 'The Information About The Graph Chart',
+  text: ` Let Google help apps determine location.
+  This means sending anonymous location data to Google,
+  even when no apps are running.`
+})
+
+export const mutations = {}

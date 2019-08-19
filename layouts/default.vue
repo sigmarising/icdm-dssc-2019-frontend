@@ -1,93 +1,112 @@
 <template>
-  <v-app dark>
+  <v-app>
+    <!-- the top bar of app -->
     <v-navigation-drawer
       v-model="drawer"
-      :mini-variant="miniVariant"
+      :mini-variant="false"
       :clipped="clipped"
       fixed
       app
     >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
+      <NaviList />
     </v-navigation-drawer>
-    <v-app-bar :clipped-left="clipped" fixed app>
+    <v-app-bar :clipped-left="clipped" fixed app dark color="#1867C0">
+      <!-- left side of app bar -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title class="imageLogo">
+        <img src="/element.svg" />
+      </v-toolbar-title>
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      <!-- right side of app bar -->
+      <a :href="mailTo" style="text-decoration: none">
+        <v-btn icon>
+          <v-icon>mdi-email-outline</v-icon>
+        </v-btn>
+      </a>
+      <a :href="telTo" style="text-decoration: none">
+        <v-btn icon>
+          <v-icon>mdi-phone</v-icon>
+        </v-btn>
+      </a>
+      <a :href="git" target="_blank" style="text-decoration: none">
+        <v-btn icon>
+          <v-icon>mdi-github-circle</v-icon>
+        </v-btn>
+      </a>
     </v-app-bar>
+
+    <!-- the main layout content -->
     <v-content>
-      <v-container>
+      <v-container fluid style="height: 100vh">
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
-    <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+
+    <SpeedDial />
+
+    <!-- the footer in default -->
+    <v-footer class="d-flex justify-center">
+      <span class="font-weight-light">
+        &copy; 2019 BUPT-DSSC &nbsp;&nbsp;&nbsp; All Rights Reserved
+      </span>
     </v-footer>
   </v-app>
 </template>
 
 <script>
+import NaviList from '@/components/layouts/NaviList.vue'
+import SpeedDial from '@/components/layouts/SpeedDial.vue'
+
 export default {
+  components: {
+    NaviList,
+    SpeedDial
+  },
   data() {
     return {
-      clipped: false,
+      // the v-model var use for side drawer
       drawer: false,
-      fixed: false,
-      items: [
-        {
-          icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        }
-      ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      // control the drawer whether to show under the app bar
+      clipped: false,
+      // the email we support to use
+      email: this.$store.state.LayoutConfig.email,
+      // the phone number we support to use
+      phone: this.$store.state.LayoutConfig.phone,
+      // the git respository use for this project
+      git: this.$store.state.LayoutConfig.git
+    }
+  },
+  computed: {
+    mailTo() {
+      return 'mailto:' + this.email
+    },
+    telTo() {
+      return 'tel:' + this.phone
     }
   }
 }
 </script>
+
+<style>
+.imageLogo {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
+/* scrollbar global */
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3);
+  border-radius: 0px;
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar {
+  width: 7px;
+  background-color: #f5f5f5;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3);
+  border-radius: 0px;
+  background-color: #a8a8a8;
+}
+</style>

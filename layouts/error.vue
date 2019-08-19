@@ -1,44 +1,27 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
-  </v-app>
+  <v-row :align="center" :justify="center">
+    <!-- Error -->
+    <v-col cols="12" class="d-flex justify-center align-end">
+      <div class="display-4 font-weight-bold">Error {{ error.statusCode }}</div>
+    </v-col>
+
+    <!-- Back to index -->
+    <v-col cols="12" class="d-flex justify-center align-start">
+      <nuxt-link
+        to="/"
+        class="title font-weight-light"
+        style="text-decoration: none"
+      >
+        BACK TO INDEX PAGE
+      </nuxt-link>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
+/* eslint-disable */
 export default {
-  layout: 'empty',
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
-  head() {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  },
-  data() {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
-    }
-  }
+  props: ['error'],
+  layout: 'fullPage' // define the layout used by error page
 }
 </script>
-
-<style scoped>
-h1 {
-  font-size: 20px;
-}
-</style>
