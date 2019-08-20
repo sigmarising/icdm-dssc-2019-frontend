@@ -25,21 +25,83 @@ export default {
       // the ECharts Option
       option: {
         title: {
-          text: 'ECharts 入门示例'
+          text: 'Knowledge Graph'
         },
-        tooltip: {},
-        legend: {
-          data: ['销量']
-        },
-        xAxis: {
-          data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
-        },
-        yAxis: {},
+        legend: {},
+        animationDurationUpdate: 1500,
+        animationEasingUpdate: 'quinticInOut',
         series: [
           {
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
+            type: 'graph',
+            layout: 'force',
+            circular: {
+              rotateLabel: true
+            },
+            roam: true,
+            draggable: true,
+            hoverAnimation: true,
+            focusNodeAdjacency: true,
+            label: {
+              show: true
+            },
+            edgeLabel: {
+              show: true
+            },
+            itemStyle: {
+              borderColor: '#FFFFFF',
+              borderWidth: 1,
+              shadowBlur: 4,
+              shadowColor: 'rgba(0, 0, 0, 0.3)'
+            },
+            lineStyle: {
+              color: 'source',
+              curveness: 0.3
+            },
+            emphasis: {
+              lineStyle: {
+                width: 7
+              },
+              itemStyle: {
+                borderColor: '#FFFFFF',
+                borderWidth: 3,
+                shadowBlur: 6,
+                shadowColor: 'rgba(0, 0, 0, 0.3)'
+              }
+            },
+            categories: [{ name: 'c1' }, { name: 'c2' }],
+            nodes: [
+              {
+                name: 'car',
+                value: 10,
+                category: 'c1'
+              },
+              {
+                name: 'people',
+                value: 10,
+                category: 'c1'
+              },
+              {
+                name: 'store',
+                value: 10,
+                category: 'c2'
+              }
+            ],
+            edges: [
+              {
+                source: 'car',
+                target: 'people',
+                label: {
+                  formatter: 'drive'
+                }
+              },
+              {
+                source: 'car',
+                target: 'store',
+                label: {
+                  formatter: 'at'
+                }
+              }
+            ]
           }
         ]
       }
@@ -79,12 +141,12 @@ export default {
 
 .area {
   height: 100%;
-  padding: 0px;
+  padding: 10px;
   margin: 0px;
 }
 
 .chart {
-  height: 450px;
+  height: 430px;
   width: 100%;
 }
 </style>

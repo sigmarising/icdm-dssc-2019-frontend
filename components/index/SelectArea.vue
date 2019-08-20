@@ -32,15 +32,16 @@
           <v-card-text>
             <v-autocomplete
               v-model="select1"
-              label="Article Select 1"
+              label="Article category"
               :items="selectItems1"
               outlined
               clearable
             />
             <v-autocomplete
               v-model="select2"
-              label="Article Select 2"
+              label="Article ID of this category"
               :items="selectItems2"
+              :disabled="isSelect2Disable"
               outlined
               clearable
             />
@@ -54,7 +55,10 @@
       <v-tab-item>
         <v-card flat>
           <v-card-text>
-            <p>You can fill the textarea from a text file:</p>
+            <p>
+              You can fill in the textarea from a text file (or input it
+              manually):
+            </p>
             <v-file-input
               v-model="files"
               :loading="isLoading"
@@ -68,7 +72,7 @@
             >
             </v-file-input>
             <v-divider style="margin-bottom: 5px" />
-            <p>Edit and analysis the text in the textarea:</p>
+            <p>Edit or analysis the text in the textarea:</p>
             <div style="height: 10px"></div>
             <v-btn color="primary" block dark :loading="isLoading">
               <v-icon left>mdi-camera-iris</v-icon>Analysis the text
@@ -102,6 +106,14 @@
 
 <script>
 export default {
+  props: {
+    categories: {
+      type: Object,
+      default() {
+        return {}
+      }
+    }
+  },
   data() {
     return {
       // v-model for selected tab
@@ -116,30 +128,10 @@ export default {
       files: [],
       // loading control of all buttons
       isLoading: false,
-      selectItems1: [
-        'Autocompletes',
-        'Comboboxes',
-        'Forms',
-        'Inputs',
-        'Overflow Buttons',
-        'Selects',
-        'Selection Controls',
-        'Sliders',
-        'Textareas',
-        'Text Fields'
-      ],
-      selectItems2: [
-        'Autocompletes',
-        'Comboboxes',
-        'Forms',
-        'Inputs',
-        'Overflow Buttons',
-        'Selects',
-        'Selection Controls',
-        'Sliders',
-        'Textareas',
-        'Text Fields'
-      ]
+      // the select2 disable
+      isSelect2Disable: true,
+      selectItems1: [],
+      selectItems2: []
     }
   },
   watch: {
@@ -153,7 +145,19 @@ export default {
     },
     radioSelected(val) {
       this.$store.commit('ShareVar/setGraphType', val)
+    },
+    select1(val) {
+      if (val) {
+        this.isSelect2Disable = false
+        this.selectItems2 = this.categories[val]
+      } else {
+        this.isSelect2Disable = true
+      }
+      this.select2 = undefined
     }
+  },
+  created() {
+    this.selectItems1 = Object.keys(this.categories)
   },
   methods: {
     fileChangeHandler() {
@@ -165,6 +169,8 @@ export default {
         }
       }
     }
-  }
+  },
+  submmit_article() {},
+  submit_text() {}
 }
 </script>

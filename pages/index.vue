@@ -6,7 +6,7 @@
       <v-row>
         <!-- control -->
         <v-col cols="12">
-          <SelectArea />
+          <SelectArea :categories="categories" />
         </v-col>
         <!-- text -->
         <v-col cols="12">
@@ -42,6 +42,12 @@ export default {
   computed: {
     dateTime() {
       return this.$store.state.ShareVar.dateTime
+    }
+  },
+  async asyncData({ $axios }) {
+    const data = await $axios.$get('/api/v1/articleListMap')
+    return {
+      categories: data
     }
   }
 }
