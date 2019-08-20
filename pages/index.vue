@@ -1,9 +1,9 @@
 <template>
   <!-- whole layout -->
-  <v-row>
+  <v-row class="layout-container">
     <!-- left -->
-    <v-col cols="12" sm="6" md="6" lg="6" xl="6" class="LeftArea">
-      <v-row>
+    <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="left-area">
+      <v-row class="left-row">
         <!-- control -->
         <v-col cols="12">
           <SelectArea :categories="categories" />
@@ -15,12 +15,8 @@
       </v-row>
     </v-col>
     <!-- right -->
-    <v-col cols="12" sm="6" md="6" lg="6" xl="6" class="RightArea">
-      <v-row style="height: 100%">
-        <v-col cols="12" style="height: 100%">
-          <GraphChart :date-time="dateTime" />
-        </v-col>
-      </v-row>
+    <v-col cols="12" sm="12" md="8" lg="8" xl="8" class="right-area">
+      <GraphChart :date-time="dateTime" />
     </v-col>
   </v-row>
 </template>
@@ -29,6 +25,7 @@
 import SelectArea from '@/components/index/SelectArea.vue'
 import TextArea from '@/components/index/TextArea.vue'
 import GraphChart from '@/components/index/GraphChart.vue'
+import 'element-ui'
 
 export default {
   components: {
@@ -52,3 +49,20 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.layout-container {
+  height: 100%;
+  padding: 0px;
+}
+
+.right-area {
+  padding-top: 24px;
+  padding-bottom: 24px;
+}
+
+.left-row,
+.right-row {
+  height: 100%;
+}
+</style>

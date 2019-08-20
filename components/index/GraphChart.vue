@@ -1,8 +1,6 @@
 <template>
-  <v-card class="card" min-height="450">
-    <div ref="area" class="area d-flex align-center">
-      <div ref="chart" class="chart"></div>
-    </div>
+  <v-card class="card">
+    <div ref="chart" class="chart"></div>
   </v-card>
 </template>
 
@@ -137,16 +135,12 @@ export default {
 <style scoped>
 .card {
   height: 100%;
-}
-
-.area {
-  height: 100%;
-  padding: 10px;
-  margin: 0px;
+  padding: 14px;
 }
 
 .chart {
-  height: 430px;
+  height: 100%;
   width: 100%;
+  min-height: 500px;
 }
 </style>

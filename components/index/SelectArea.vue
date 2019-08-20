@@ -1,5 +1,5 @@
 <template>
-  <v-card ref="card">
+  <v-card ref="card" style="height: 100%">
     <v-toolbar flat>
       <v-toolbar-title>Control Center</v-toolbar-title>
     </v-toolbar>
@@ -45,7 +45,13 @@
               outlined
               clearable
             />
-            <v-btn color="primary" block dark :loading="isLoading">
+            <v-btn
+              color="primary"
+              block
+              dark
+              :loading="isLoading"
+              @click="submmit_article"
+            >
               <v-icon left>mdi-camera-iris</v-icon> Analysis this Article
             </v-btn>
           </v-card-text>
@@ -105,6 +111,9 @@
 </template>
 
 <script>
+import { Notification } from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+
 export default {
   props: {
     categories: {
@@ -168,9 +177,16 @@ export default {
           this.$store.commit('ShareVar/setInputText', e.target.result)
         }
       }
-    }
-  },
-  submmit_article() {},
-  submit_text() {}
+    },
+    submmit_article() {
+      Notification.info({
+        title: 'Info',
+        message: 'this is message',
+        duration: 3000,
+        showClose: true
+      })
+    },
+    submit_text() {}
+  }
 }
 </script>

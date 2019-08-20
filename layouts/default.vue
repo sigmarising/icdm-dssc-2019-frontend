@@ -37,15 +37,14 @@
 
     <!-- the main layout content -->
     <v-content>
-      <v-container>
+      <v-container fluid style="height: 100%">
         <nuxt />
       </v-container>
+      <SpeedDial />
     </v-content>
 
-    <SpeedDial />
-
     <!-- the footer in default -->
-    <v-footer class="d-flex justify-center">
+    <v-footer class="d-flex justify-center" padless>
       <span class="font-weight-light">
         &copy; 2019 BUPT-DSSC &nbsp;&nbsp;&nbsp; All Rights Reserved
       </span>
@@ -88,10 +87,6 @@ export default {
 </script>
 
 <style>
-html {
-  height: 100%;
-}
-
 /* scrollbar global */
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3);

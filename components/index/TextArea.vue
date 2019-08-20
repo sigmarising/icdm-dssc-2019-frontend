@@ -1,14 +1,14 @@
 <template>
-  <v-card ref="card">
-    <div class="textArea">
+  <v-card ref="card" class="card">
+    <div class="d-flex align-center" style="height: 100%">
       <v-textarea
         v-model.lazy.trim="inputText"
         :disabled="disable"
         label="Text Area"
         hint="The text which is used for analysising."
-        outlined
-        auto-grow
+        rows="10"
         clearable
+        no-resize
       ></v-textarea>
     </div>
   </v-card>
@@ -45,8 +45,8 @@ export default {
 </script>
 
 <style scoped>
-.textArea {
-  height: 100%;
+.card {
   padding: 16px;
+  height: 100%;
 }
 </style>
