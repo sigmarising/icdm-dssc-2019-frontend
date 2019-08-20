@@ -19,7 +19,7 @@
         </v-btn>
       </template>
       <v-btn fab dark small color="green" @click="dialog = true">
-        <v-icon>mdi-message-text-outline</v-icon>
+        <v-icon>mdi-comment-text</v-icon>
       </v-btn>
       <v-btn fab dark small color="red" @click="$vuetify.goTo(0, ScrollOption)">
         <v-icon>mdi-arrow-up</v-icon>

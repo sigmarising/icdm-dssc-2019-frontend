@@ -13,7 +13,7 @@
     <v-app-bar :clipped-left="clipped" fixed app dark color="#1867C0">
       <!-- left side of app bar -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title class="imageLogo">
+      <v-toolbar-title class="d-flex justify-center align-center">
         <img src="/element.svg" />
       </v-toolbar-title>
       <v-spacer />
@@ -37,7 +37,7 @@
 
     <!-- the main layout content -->
     <v-content>
-      <v-container fluid style="height: 100vh">
+      <v-container>
         <nuxt />
       </v-container>
     </v-content>
@@ -88,10 +88,8 @@ export default {
 </script>
 
 <style>
-.imageLogo {
-  display: flex;
-  justify-content: center;
-  align-content: center;
+html {
+  height: 100%;
 }
 
 /* scrollbar global */
