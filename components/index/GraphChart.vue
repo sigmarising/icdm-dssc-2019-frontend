@@ -8,16 +8,9 @@
 import echarts from 'echarts'
 
 export default {
-  props: {
-    dateTime: {
-      type: String,
-      default: ''
-    }
-  },
+  props: {},
   data() {
     return {
-      chartHeight: 450,
-      chartWeight: 600,
       // the Echarts instance
       chart: null,
       // the ECharts Option
@@ -25,13 +18,17 @@ export default {
         title: {
           text: 'Knowledge Graph'
         },
-        legend: {},
+        legend: { bottom: 15 },
         animationDurationUpdate: 1500,
         animationEasingUpdate: 'quinticInOut',
         series: [
           {
             type: 'graph',
-            layout: 'force',
+            layout: this.$store.state.ShareVar.graphType,
+            force: {
+              repulsion: 350,
+              edgeLength: [100, 150]
+            },
             circular: {
               rotateLabel: true
             },
@@ -40,10 +37,12 @@ export default {
             hoverAnimation: true,
             focusNodeAdjacency: true,
             label: {
-              show: true
+              show: true,
+              fontSize: 15
             },
             edgeLabel: {
-              show: true
+              show: true,
+              fontSize: 12
             },
             itemStyle: {
               borderColor: '#FFFFFF',
@@ -66,48 +65,48 @@ export default {
                 shadowColor: 'rgba(0, 0, 0, 0.3)'
               }
             },
-            categories: [{ name: 'c1' }, { name: 'c2' }],
-            nodes: [
-              {
-                name: 'car',
-                value: 10,
-                category: 'c1'
-              },
-              {
-                name: 'people',
-                value: 10,
-                category: 'c1'
-              },
-              {
-                name: 'store',
-                value: 10,
-                category: 'c2'
-              }
-            ],
-            edges: [
-              {
-                source: 'car',
-                target: 'people',
-                label: {
-                  formatter: 'drive'
-                }
-              },
-              {
-                source: 'car',
-                target: 'store',
-                label: {
-                  formatter: 'at'
-                }
-              }
-            ]
+            nodes: this.$store.state.ShareVar.echartsNodes,
+            edges: this.$store.state.ShareVar.echartsEdges,
+            categories: this.$store.state.ShareVar.echartsCategories
           }
         ]
       }
     }
   },
+  computed: {
+    dateTime() {
+      return this.$store.state.ShareVar.dateTime
+    },
+    graphLayoutType() {
+      return this.$store.state.ShareVar.graphType
+    },
+    isLoading() {
+      return this.$store.state.ShareVar.isLoading
+    }
+  },
   watch: {
     dateTime() {
-      // this.updateSize()
+      const nodes = this.$store.state.ShareVar.echartsNodes
+      const edges = this.$store.state.ShareVar.echartsEdges
+      const categories = this.$store.state.ShareVar.echartsCategories
+
+      this.option.series[0].nodes = nodes
+      this.option.series[0].edges = edges
+      this.option.series[0].categories = categories
+
+      this.chart.setOption(this.option, true)
+    },
+    graphLayoutType() {
+      this.option.series[0].layout = this.graphLayoutType
+
+      this.chart.setOption(this.option, true)
+    },
+    isLoading(val) {
+      if (val) {
+        this.chart.showLoading()
+      } else {
+        this.chart.hideLoading()
+      }
     }
   },
   mounted() {
@@ -135,7 +134,7 @@ export default {
 <style scoped>
 .card {
   height: 100%;
-  padding: 14px;
+  padding: 15px;
 }
 
 .chart {

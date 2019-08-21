@@ -4,8 +4,10 @@
       <v-textarea
         v-model.lazy.trim="inputText"
         :disabled="disable"
+        :loading="isLoading"
         label="Text Area"
         hint="The text which is used for analysising."
+        autocomplete="off"
         rows="10"
         clearable
         no-resize
@@ -28,12 +30,14 @@ export default {
     },
     fileText() {
       return this.$store.state.ShareVar.textInput
+    },
+    isLoading() {
+      return this.$store.state.ShareVar.isLoading
     }
   },
   watch: {
     inputText(val) {
       this.$store.commit('ShareVar/setInputText', val)
-      this.$store.commit('ShareVar/updateDateTime', Date())
     },
     fileText(val) {
       this.inputText = val

@@ -18,6 +18,15 @@
           <v-icon v-else>mdi-all-inclusive</v-icon>
         </v-btn>
       </template>
+      <v-btn
+        fab
+        dark
+        small
+        color="orange"
+        @click="$vuetify.goTo('footer', ScrollOption)"
+      >
+        <v-icon>mdi-arrow-down</v-icon>
+      </v-btn>
       <v-btn fab dark small color="green" @click="dialog = true">
         <v-icon>mdi-comment-text</v-icon>
       </v-btn>

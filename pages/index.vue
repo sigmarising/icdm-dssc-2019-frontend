@@ -16,16 +16,17 @@
     </v-col>
     <!-- right -->
     <v-col cols="12" sm="12" md="8" lg="8" xl="8" class="right-area">
-      <GraphChart :date-time="dateTime" />
+      <GraphChart />
     </v-col>
   </v-row>
 </template>
 
 <script>
+import { Notification } from 'element-ui'
 import SelectArea from '@/components/index/SelectArea.vue'
 import TextArea from '@/components/index/TextArea.vue'
 import GraphChart from '@/components/index/GraphChart.vue'
-import 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 export default {
   components: {
@@ -36,13 +37,21 @@ export default {
   data() {
     return {}
   },
-  computed: {
-    dateTime() {
-      return this.$store.state.ShareVar.dateTime
-    }
-  },
   async asyncData({ $axios }) {
-    const data = await $axios.$get('/api/v1/articleListMap')
+    let data
+    try {
+      data = await $axios.$get('/api/v1/articleListMap')
+    } catch (error) {
+      Notification.error({
+        title: 'ERROR in Backend Services',
+        message: `KROAS can not access to backend service.
+        Some features can not be used at this time.
+        Please refresh this page later and retry.`,
+        duration: 0,
+        showClose: true
+      })
+      data = {}
+    }
     return {
       categories: data
     }

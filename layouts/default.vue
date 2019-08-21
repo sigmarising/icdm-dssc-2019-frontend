@@ -13,8 +13,11 @@
     <v-app-bar :clipped-left="clipped" fixed app dark color="#1867C0">
       <!-- left side of app bar -->
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title class="d-flex justify-center align-center">
-        <img src="/element.svg" />
+      <v-toolbar-title
+        class="d-flex justify-center align-center"
+        style="padding-left: 10px"
+      >
+        <img src="/imgs/logo.png" height="38px" />
       </v-toolbar-title>
       <v-spacer />
       <!-- right side of app bar -->
@@ -28,11 +31,11 @@
           <v-icon>mdi-phone</v-icon>
         </v-btn>
       </a>
-      <a :href="git" target="_blank" style="text-decoration: none">
+      <!-- <a :href="git" target="_blank" style="text-decoration: none">
         <v-btn icon>
           <v-icon>mdi-github-circle</v-icon>
         </v-btn>
-      </a>
+      </a> -->
     </v-app-bar>
 
     <!-- the main layout content -->
@@ -70,9 +73,9 @@ export default {
       // the email we support to use
       email: this.$store.state.LayoutConfig.email,
       // the phone number we support to use
-      phone: this.$store.state.LayoutConfig.phone,
+      phone: this.$store.state.LayoutConfig.phone
       // the git respository use for this project
-      git: this.$store.state.LayoutConfig.git
+      // git: this.$store.state.LayoutConfig.git
     }
   },
   computed: {
@@ -89,7 +92,7 @@ export default {
 <style>
 /* scrollbar global */
 ::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3);
+  /* -webkit-box-shadow: inset 0 0 7px rgba(0, 0, 0, 0.3); */
   border-radius: 0px;
   background-color: #f5f5f5;
 }
