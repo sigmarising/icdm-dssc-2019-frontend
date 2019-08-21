@@ -148,7 +148,7 @@ export default {
       // v-model for select1
       select2: '',
       // v-model for radio
-      radioSelected: 'force',
+      radioSelected: this.$store.state.ShareVar.graphType,
       // v-model for files
       files: [],
       selectItems1: [],
