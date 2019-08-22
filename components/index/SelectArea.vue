@@ -68,6 +68,7 @@
                 label="Article Industry"
                 autocomplete="off"
                 :items="selectItems1"
+                :loading="isLoading"
                 outlined
                 clearable
               />
@@ -77,6 +78,7 @@
                 autocomplete="off"
                 :items="selectItems2"
                 :disabled="isSelect2Disable"
+                :loading="isLoading"
                 outlined
                 clearable
               />
@@ -237,15 +239,15 @@ export default {
         }
       }
     },
-    analysisText() {
+    async analysisText() {
       this.$store.commit('ShareVar/setIsLoading', true)
       switch (this.inputSelected) {
         case 'article':
-          this.articleHandler()
+          await this.articleHandler()
           break
         case 'file':
           if (this.fileText) {
-            this.textHandler(this.fileText)
+            await this.textHandler(this.fileText)
           } else {
             Notification.warning({
               title: 'Notice',
@@ -258,7 +260,7 @@ export default {
         case 'textarea':
           const text = this.$store.state.ShareVar.textInput
           if (text) {
-            this.textHandler(text)
+            await this.textHandler(text)
           } else {
             Notification.warning({
               title: 'Notice',

@@ -54,7 +54,7 @@ export default {
     proxy: true
   },
   proxy: {
-    '/api/': 'http://localhost:8000'
+    '/api/': 'http://39.98.186.125:8000'
   },
   /*
    ** vuetify module configuration
