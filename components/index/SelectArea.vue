@@ -3,7 +3,7 @@
     <v-toolbar flat>
       <v-toolbar-title><b>Control Center</b></v-toolbar-title>
     </v-toolbar>
-    <v-tabs v-model="tabSelected" grow>
+    <v-tabs v-model="tabSelected" :grow="false">
       <v-tab><v-icon left>mdi-text-subject</v-icon>readme</v-tab>
       <v-tab><v-icon left>mdi-pencil-box-outline</v-icon>input</v-tab>
 
