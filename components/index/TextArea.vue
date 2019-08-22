@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex align-center" style="height: 100%">
     <v-textarea
-      v-model.lazy.trim="inputText"
+      v-model.trim="inputText"
       :loading="isLoading"
       label="Text Area"
       hint="The text which is used for analysising."
