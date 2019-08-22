@@ -1,19 +1,16 @@
 <template>
-  <v-card ref="card" class="card">
-    <div class="d-flex align-center" style="height: 100%">
-      <v-textarea
-        v-model.lazy.trim="inputText"
-        :disabled="disable"
-        :loading="isLoading"
-        label="Text Area"
-        hint="The text which is used for analysising."
-        autocomplete="off"
-        rows="10"
-        clearable
-        no-resize
-      ></v-textarea>
-    </div>
-  </v-card>
+  <div class="d-flex align-center" style="height: 100%">
+    <v-textarea
+      v-model.lazy.trim="inputText"
+      :loading="isLoading"
+      label="Text Area"
+      hint="The text which is used for analysising."
+      autocomplete="off"
+      rows="10"
+      clearable
+      no-resize
+    ></v-textarea>
+  </div>
 </template>
 
 <script>
@@ -25,12 +22,6 @@ export default {
     }
   },
   computed: {
-    disable() {
-      return !this.$store.state.ShareVar.isTextAreaAvaliable
-    },
-    fileText() {
-      return this.$store.state.ShareVar.textInput
-    },
     isLoading() {
       return this.$store.state.ShareVar.isLoading
     }
@@ -38,9 +29,6 @@ export default {
   watch: {
     inputText(val) {
       this.$store.commit('ShareVar/setInputText', val)
-    },
-    fileText(val) {
-      this.inputText = val
     }
   },
 
@@ -49,8 +37,8 @@ export default {
 </script>
 
 <style scoped>
-.card {
+/* .card {
   padding: 16px;
   height: 100%;
-}
+} */
 </style>

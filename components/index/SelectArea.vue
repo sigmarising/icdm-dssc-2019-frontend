@@ -1,21 +1,23 @@
 <template>
   <v-card ref="card" style="height: 100%">
     <v-toolbar flat>
-      <v-toolbar-title>Control Center</v-toolbar-title>
+      <v-toolbar-title><b>Control Center</b></v-toolbar-title>
     </v-toolbar>
-    <v-tabs v-model="tabSelected">
-      <v-tab><v-icon left>mdi-information-variant</v-icon>readme</v-tab>
-      <v-tab><v-icon left>mdi-text-subject</v-icon>articles</v-tab>
-      <v-tab><v-icon left>mdi-circle-edit-outline</v-icon>manual</v-tab>
-      <v-tab><v-icon left>mdi-settings-outline</v-icon>graph</v-tab>
+    <v-tabs v-model="tabSelected" grow>
+      <v-tab><v-icon left>mdi-text-subject</v-icon>readme</v-tab>
+      <v-tab><v-icon left>mdi-pencil-box-outline</v-icon>input</v-tab>
+
       <!-- info -->
       <v-tab-item>
         <v-card flat>
           <v-card-text>
             <p>
               Welcome to the <b>KROAS</b> (<b>K</b>nowledge g<b>R</b>aph
-              <b>O</b>nline <b>A</b>nalysis <b>S</b>ystem). There are some usage
-              of this website.
+              <b>O</b>nline <b>A</b>nalysis <b>S</b>ystem).
+            </p>
+
+            <p>
+              There are some usage of this website.
             </p>
 
             <p>
@@ -37,86 +39,112 @@
       <v-tab-item>
         <v-card flat>
           <v-card-text>
-            <v-autocomplete
-              v-model="select1"
-              label="Article Industry"
-              autocomplete="off"
-              :items="selectItems1"
-              outlined
-              clearable
-            />
-            <v-autocomplete
-              v-model="select2"
-              label="Article Index"
-              autocomplete="off"
-              :items="selectItems2"
-              :disabled="isSelect2Disable"
-              outlined
-              clearable
-            />
-            <v-btn
-              color="primary"
-              block
-              dark
-              :loading="isLoading"
-              @click="submmitArticle"
-            >
-              <v-icon left>mdi-camera-iris</v-icon> Analysis this Article
-            </v-btn>
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-      <!-- manual -->
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>
             <p>
-              You can fill in the textarea from a text file (or input it
-              manually):
+              Select the input source form:
             </p>
-            <v-file-input
-              v-model="files"
-              :loading="isLoading"
-              color="green"
-              autocomplete="off"
-              label="Upload from a text File"
-              prepend-inner-icon="mdi-paperclip"
-              prepend-icon=""
-              outlined
-              clearable
-              @change="fileChangeHandler"
-            >
-            </v-file-input>
-            <v-divider style="margin-bottom: 5px" />
-            <p>Edit or analysis the text in the textarea:</p>
-            <div style="height: 10px"></div>
+            <!-- input control radios -->
+            <v-radio-group v-model="inputSelected" row>
+              <v-radio
+                label="Article"
+                value="article"
+                color="blue darken-3"
+              ></v-radio>
+              <v-radio
+                label="File"
+                value="file"
+                color="green darken-3"
+              ></v-radio>
+              <v-radio
+                label="Textarea"
+                value="textarea"
+                color="red darken-3"
+              ></v-radio>
+            </v-radio-group>
+
+            <!-- radio article -->
+            <div v-show="inputSelected === 'article'">
+              <v-autocomplete
+                v-model="select1"
+                label="Article Industry"
+                autocomplete="off"
+                :items="selectItems1"
+                outlined
+                clearable
+              />
+              <v-autocomplete
+                v-model="select2"
+                label="Article Index"
+                autocomplete="off"
+                :items="selectItems2"
+                :disabled="isSelect2Disable"
+                outlined
+                clearable
+              />
+            </div>
+
+            <!-- radio file -->
+            <div v-show="inputSelected === 'file'">
+              <v-file-input
+                v-model="files"
+                :loading="isLoading"
+                color="green"
+                autocomplete="off"
+                label="Upload from a text File"
+                prepend-inner-icon="mdi-paperclip"
+                prepend-icon=""
+                outlined
+                clearable
+                @change="fileChangeHandler"
+              >
+              </v-file-input>
+            </div>
+
+            <!-- radio textarea -->
+            <div v-show="inputSelected === 'textarea'">
+              <TextArea />
+            </div>
+
+            <!-- analysis btn -->
             <v-btn
               color="primary"
               block
               dark
               :loading="isLoading"
-              @click="submitText"
+              @click="analysisText"
             >
-              <v-icon left>mdi-camera-iris</v-icon>Analysis the text
+              <v-icon left>mdi-camera-iris</v-icon> Analysis
             </v-btn>
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-      <!-- graph -->
-      <v-tab-item>
-        <v-card flat>
-          <v-card-text>
-            <p>The layout settings of the graph chart:</p>
-            <v-radio-group v-model="radioSelected" row>
+
+            <!-- divider -->
+            <div style="height: 10px"></div>
+            <v-divider />
+            <div style="height: 10px"></div>
+
+            <!-- graph control -->
+            <p>Layout of the graph:</p>
+            <v-radio-group v-model="layoutSelected" row>
               <v-radio
                 label="Force"
                 value="force"
-                color="green darken-3"
+                color="teal darken-1"
               ></v-radio>
               <v-radio
                 label="Circular"
                 value="circular"
-                color="red darken-3"
+                color="purple darken-1"
+              ></v-radio>
+            </v-radio-group>
+            <p>Undirected/Directed of the graph:</p>
+            <v-radio-group v-model="directedSelected" row>
+              <v-radio
+                label="Undirected"
+                value="undirected"
+                color="orange darken-4"
+              ></v-radio>
+              <v-radio
+                label="Directed"
+                value="directed"
+                color="indigo lighten-1"
               ></v-radio>
             </v-radio-group>
           </v-card-text>
@@ -129,8 +157,12 @@
 <script>
 import { Notification } from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import TextArea from '@/components/index/TextArea.vue'
 
 export default {
+  components: {
+    TextArea
+  },
   props: {
     categories: {
       type: Object,
@@ -142,15 +174,21 @@ export default {
   data() {
     return {
       // v-model for selected tab
-      tabSelected: 0,
+      tabSelected: 1,
       // v-model for select1
       select1: '',
       // v-model for select1
       select2: '',
-      // v-model for radio
-      radioSelected: this.$store.state.ShareVar.graphType,
+      // v-model for input radio
+      inputSelected: this.$store.state.ShareVar.inputSelect,
+      // v-model for layout radio
+      layoutSelected: this.$store.state.ShareVar.graphType,
+      // v-model for directed Selected radio
+      directedSelected: this.$store.state.ShareVar.directedSelected,
       // v-model for files
-      files: [],
+      files: null,
+      // text in the file
+      fileText: '',
       selectItems1: [],
       selectItems2: []
     }
@@ -165,15 +203,19 @@ export default {
     }
   },
   watch: {
-    tabSelected(val) {
-      if (val === 2 || val === 1) {
-        this.$store.commit('ShareVar/setTextAreaAvaliable', true)
-      } else {
-        this.$store.commit('ShareVar/setTextAreaAvaliable', false)
+    files(val) {
+      if (!val) {
+        this.fileText = ''
       }
     },
-    radioSelected(val) {
+    layoutSelected(val) {
       this.$store.commit('ShareVar/setGraphType', val)
+    },
+    inputSelected(val) {
+      this.$store.commit('ShareVar/setInputSelect', val)
+    },
+    directedSelected(val) {
+      this.$store.commit('ShareVar/setDirectedSelected', val)
     },
     select1(val) {
       if (val) this.selectItems2 = this.categories[val]
@@ -190,13 +232,50 @@ export default {
         const reader = new FileReader()
         reader.readAsText(this.files)
         reader.onload = (e) => {
-          this.$store.commit('ShareVar/setInputText', e.target.result)
+          // this.$store.commit('ShareVar/setInputText', e.target.result)
+          this.fileText = e.target.result
         }
       }
     },
-    async submmitArticle() {
+    analysisText() {
+      this.$store.commit('ShareVar/setIsLoading', true)
+      switch (this.inputSelected) {
+        case 'article':
+          this.articleHandler()
+          break
+        case 'file':
+          if (this.fileText) {
+            this.textHandler(this.fileText)
+          } else {
+            Notification.warning({
+              title: 'Notice',
+              message: 'You should choice a file to get its text.',
+              duration: 6000,
+              showClose: true
+            })
+          }
+          break
+        case 'textarea':
+          const text = this.$store.state.ShareVar.textInput
+          if (text) {
+            this.textHandler(text)
+          } else {
+            Notification.warning({
+              title: 'Notice',
+              message: 'There should be something in the text area.',
+              duration: 6000,
+              showClose: true
+            })
+          }
+
+          break
+        default:
+          break
+      }
+      this.$store.commit('ShareVar/setIsLoading', false)
+    },
+    async articleHandler() {
       if (this.select1 && this.select2) {
-        this.$store.commit('ShareVar/setIsLoading', true)
         let data
         try {
           data = await this.$axios.$get('/api/v1/articleInfo', {
@@ -206,7 +285,7 @@ export default {
             }
           })
           this.adjustNodeSize(data.graph.nodes)
-          this.$store.commit('ShareVar/setInputText', data.content)
+          // this.$store.commit('ShareVar/setInputText', data.content)
           this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
           this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
           this.$store.commit(
@@ -214,6 +293,9 @@ export default {
             data.graph.categories
           )
           this.$store.commit('ShareVar/updateDateTime')
+
+          // success notice
+          this.successNotice("Get Article' info Success!")
         } catch (error) {
           data = {}
           Notification.error({
@@ -224,7 +306,6 @@ export default {
             showClose: true
           })
         }
-        this.$store.commit('ShareVar/setIsLoading', false)
       } else {
         Notification.warning({
           title: 'Notice',
@@ -235,10 +316,8 @@ export default {
         })
       }
     },
-    async submitText() {
-      const text = this.$store.state.ShareVar.textInput
+    async textHandler(text) {
       if (text) {
-        this.$store.commit('ShareVar/setIsLoading', true)
         let data
         try {
           data = await this.$axios.$get('/api/v1/knowledgeGraph', {
@@ -254,24 +333,19 @@ export default {
             data.graph.categories
           )
           this.$store.commit('ShareVar/updateDateTime')
+
+          // success notice
+          this.successNotice('Analysis text Success!')
         } catch (error) {
           data = {}
           Notification.error({
-            title: 'ERROR in Requesting',
-            message:
-              'There are something error when apply request. Please retry later.',
+            title: 'Internal ERROR',
+            message: 'Text is null/undefined!',
             duration: 6000,
             showClose: true
           })
         }
-        this.$store.commit('ShareVar/setIsLoading', false)
       } else {
-        Notification.warning({
-          title: 'Notice',
-          message: 'There should be something in the text area.',
-          duration: 6000,
-          showClose: true
-        })
       }
     },
     adjustNodeSize(nodes) {
@@ -280,6 +354,14 @@ export default {
       for (const node of nodes) {
         node.symbolSize = Math.floor(node.symbolSize * adjustSize) + basicSize
       }
+    },
+    successNotice(text) {
+      Notification.success({
+        title: 'Success',
+        message: text,
+        duration: 6000,
+        showClose: true
+      })
     }
   }
 }

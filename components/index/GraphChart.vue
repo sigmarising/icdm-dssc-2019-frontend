@@ -26,8 +26,8 @@ export default {
             type: 'graph',
             layout: this.$store.state.ShareVar.graphType,
             force: {
-              repulsion: 350,
-              edgeLength: [100, 150]
+              repulsion: 400,
+              edgeLength: 150
             },
             circular: {
               rotateLabel: true
@@ -36,6 +36,8 @@ export default {
             draggable: true,
             hoverAnimation: true,
             focusNodeAdjacency: true,
+            edgeSymbol: this.$store.getters['ShareVar/edgeSymbol'],
+            edgeSymbolSize: 10,
             label: {
               show: true,
               fontSize: 15
@@ -52,11 +54,13 @@ export default {
             },
             lineStyle: {
               color: 'source',
-              curveness: 0.3
+              curveness: 0.3,
+              opacity: 0.6
             },
             emphasis: {
               lineStyle: {
-                width: 7
+                width: 3,
+                opacity: 0.5
               },
               itemStyle: {
                 borderColor: '#FFFFFF',
@@ -80,6 +84,9 @@ export default {
     graphLayoutType() {
       return this.$store.state.ShareVar.graphType
     },
+    edgeSymbol() {
+      return this.$store.getters['ShareVar/edgeSymbol']
+    },
     isLoading() {
       return this.$store.state.ShareVar.isLoading
     }
@@ -98,6 +105,11 @@ export default {
     },
     graphLayoutType() {
       this.option.series[0].layout = this.graphLayoutType
+
+      this.chart.setOption(this.option, true)
+    },
+    edgeSymbol() {
+      this.option.series[0].edgeSymbol = this.edgeSymbol
 
       this.chart.setOption(this.option, true)
     },

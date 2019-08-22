@@ -2,7 +2,8 @@ export const state = () => ({
   dateTime: '',
   textInput: '',
   graphType: 'force',
-  isTextAreaAvaliable: false,
+  inputSelect: 'article',
+  directedSelected: 'undirected',
   // loading control of all input
   isLoading: false,
   echartsNodes: [
@@ -44,6 +45,13 @@ export const state = () => ({
   echartsCategories: [{ name: 'c1' }, { name: 'c2' }]
 })
 
+export const getters = {
+  edgeSymbol(state) {
+    if (state.directedSelected === 'undirected') return ['none', 'none']
+    else if (state.directedSelected === 'directed') return ['none', 'arrow']
+  }
+}
+
 export const mutations = {
   updateDateTime(state) {
     state.dateTime = Date()
@@ -54,8 +62,11 @@ export const mutations = {
   setGraphType(state, type) {
     state.graphType = type
   },
-  setTextAreaAvaliable(state, val) {
-    state.isTextAreaAvaliable = val
+  setInputSelect(state, type) {
+    state.inputSelect = type
+  },
+  setDirectedSelected(state, type) {
+    state.directedSelected = type
   },
   setIsLoading(state, val) {
     state.isLoading = val

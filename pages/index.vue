@@ -3,16 +3,7 @@
   <v-row class="layout-container">
     <!-- left -->
     <v-col cols="12" sm="12" md="4" lg="4" xl="4" class="left-area">
-      <v-row class="left-row">
-        <!-- control -->
-        <v-col cols="12">
-          <SelectArea :categories="categories" />
-        </v-col>
-        <!-- text -->
-        <v-col cols="12">
-          <TextArea />
-        </v-col>
-      </v-row>
+      <SelectArea :categories="categories" />
     </v-col>
     <!-- right -->
     <v-col cols="12" sm="12" md="8" lg="8" xl="8" class="right-area">
@@ -24,15 +15,15 @@
 <script>
 import { Notification } from 'element-ui'
 import SelectArea from '@/components/index/SelectArea.vue'
-import TextArea from '@/components/index/TextArea.vue'
+// import TextArea from '@/components/index/TextArea.vue'
 import GraphChart from '@/components/index/GraphChart.vue'
 import 'element-ui/lib/theme-chalk/index.css'
 
 export default {
   components: {
     SelectArea,
-    TextArea,
     GraphChart
+    // TextArea,
   },
   data() {
     return {}
@@ -65,7 +56,7 @@ export default {
   padding: 0px;
 }
 
-.right-area {
+/* .right-area {
   padding-top: 24px;
   padding-bottom: 24px;
 }
@@ -73,5 +64,5 @@ export default {
 .left-row,
 .right-row {
   height: 100%;
-}
+} */
 </style>

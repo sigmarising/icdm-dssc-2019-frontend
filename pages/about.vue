@@ -5,8 +5,27 @@
       <v-timeline dense>
         <v-timeline-item
           :fill-dot="isfillDot"
-          :icon="'mdi-webpack'"
+          :icon="'mdi-visual-studio-code'"
           color="#01579B"
+        >
+          <v-card class="elevation-2">
+            <v-card-title class="headline">
+              <b>About the KROAS Project</b>
+            </v-card-title>
+            <v-divider></v-divider>
+            <v-card-text>
+              the <b>K</b>nowledge g<b>R</b>aph <b>O</b>nline <b>A</b>nalysis
+              <b>S</b>ystem is the web application of team BUPT-IBL's (
+              belonging to BUPT-DSSC Group 2 ) Entries for ICDM2019. The Model
+              Algorithm is created by team leader Junwei Sun, instructed by Ting
+              Bai and Bin Wu. The full stack web app is developed by Yun Zhang.
+            </v-card-text>
+          </v-card>
+        </v-timeline-item>
+        <v-timeline-item
+          :fill-dot="isfillDot"
+          :icon="'mdi-webpack'"
+          color="#5E35B1"
         >
           <v-card class="elevation-2">
             <v-card-title class="headline"><b>Front End</b></v-card-title>
@@ -151,6 +170,16 @@
                   >: icdm-dssc-2019-backend
                 </li>
               </ul>
+              <b>
+                <a
+                  class="links"
+                  style="color: grey"
+                  href="https://github.com/sigmarising"
+                  target="_blank"
+                >
+                  Following the Author
+                </a> </b
+              >: Yun Zhang, a developer who works in BUPT-DSSC Group 2.
             </v-card-text>
           </v-card>
         </v-timeline-item>
