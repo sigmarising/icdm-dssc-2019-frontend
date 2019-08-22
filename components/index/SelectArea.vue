@@ -339,13 +339,20 @@ export default {
         } catch (error) {
           data = {}
           Notification.error({
-            title: 'Internal ERROR',
-            message: 'Text is null/undefined!',
+            title: 'ERROR in Requesting',
+            message:
+              'There are something error when apply request. Please retry later.',
             duration: 6000,
             showClose: true
           })
         }
       } else {
+        Notification.warning({
+          title: 'Notice',
+          message: 'Text is null/undefined!',
+          duration: 6000,
+          showClose: true
+        })
       }
     },
     adjustNodeSize(nodes) {
