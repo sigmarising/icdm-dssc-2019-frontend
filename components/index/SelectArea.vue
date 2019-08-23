@@ -106,21 +106,42 @@
               <TextArea />
             </div>
 
-            <!-- analysis btn -->
-            <v-btn
-              color="primary"
-              block
-              dark
-              :loading="isLoading"
-              @click="analysisText"
-            >
-              <v-icon left>mdi-camera-iris</v-icon> Analysis
-            </v-btn>
+            <div style="height: 10px"></div>
+
+            <!-- submit area -->
+            <div>
+              <!-- Analysis strength -->
+              <v-select
+                v-model="analysisStrength"
+                :loading="isLoading"
+                :items="['Weak', 'Medium', 'Strong']"
+                label="Analysis Strength"
+                outlined
+              ></v-select>
+              <!-- Node classification -->
+              <v-select
+                v-model="analysisCategory"
+                :loading="isLoading"
+                :items="['Entity Category', 'Communities Detection']"
+                label="Node classification"
+                outlined
+              ></v-select>
+              <!-- analysis btn -->
+              <v-btn
+                color="primary"
+                block
+                dark
+                :loading="isLoading"
+                @click="analysisText"
+              >
+                <v-icon left>mdi-camera-iris</v-icon> Analysis
+              </v-btn>
+            </div>
 
             <!-- divider -->
-            <div style="height: 10px"></div>
+            <div style="height: 15px"></div>
             <v-divider />
-            <div style="height: 10px"></div>
+            <div style="height: 5px"></div>
 
             <!-- graph control -->
             <p>Layout of the graph:</p>
@@ -189,6 +210,10 @@ export default {
       directedSelected: this.$store.state.ShareVar.directedSelected,
       // v-model for files
       files: null,
+      // v-model for strength
+      analysisStrength: 'Medium',
+      // v-model for Node classification
+      analysisCategory: 'Entity Category',
       // text in the file
       fileText: '',
       selectItems1: [],
@@ -283,7 +308,9 @@ export default {
           data = await this.$axios.$get('/api/v1/articleInfo', {
             params: {
               category: this.select1,
-              identity: this.select2
+              identity: this.select2,
+              strength: this.analysisStrength,
+              categoryType: this.analysisCategory
             }
           })
           this.adjustNodeSize(data.graph.nodes)
@@ -324,7 +351,9 @@ export default {
         try {
           data = await this.$axios.$get('/api/v1/knowledgeGraph', {
             params: {
-              text: this.$store.state.ShareVar.textInput
+              text: this.$store.state.ShareVar.textInput,
+              strength: this.analysisStrength,
+              category: this.analysisCategory
             }
           })
           this.adjustNodeSize(data.graph.nodes)
