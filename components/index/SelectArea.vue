@@ -351,7 +351,7 @@ export default {
         try {
           data = await this.$axios.$get('/api/v1/knowledgeGraph', {
             params: {
-              text: this.$store.state.ShareVar.textInput,
+              text,
               strength: this.analysisStrength,
               category: this.analysisCategory
             }
