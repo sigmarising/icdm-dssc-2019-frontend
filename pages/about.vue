@@ -25,7 +25,7 @@
                 Please feel free to contact us if you have any question.
               </p>
               <p>
-                BUPT-IBL Team: Junwei Sun, Yun Zhang, Bin Wu, Ting Bai
+                Team BUPT-IBL: Junwei Sun, Yun Zhang, Bin Wu, Ting Bai
                 <br />
                 Email: sjw1996@bupt.edu.cn
                 <br />

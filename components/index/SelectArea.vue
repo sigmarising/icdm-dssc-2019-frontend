@@ -58,7 +58,7 @@
             <!-- input control radios -->
             <v-radio-group v-model="inputSelected" row>
               <v-radio
-                label="Article"
+                label="From Dataset"
                 value="article"
                 color="blue darken-3"
               ></v-radio>
