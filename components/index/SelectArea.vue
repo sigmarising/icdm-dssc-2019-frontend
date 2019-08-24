@@ -23,11 +23,10 @@
               (icdm_contest_data.csv), Upload File and Input Text.
             </p>
             <p>
-              Relation Confidence: Including strong, medium and weak three
-              levels. Strong means that we only display the triples with high
-              quality relations, while weak represents that all the triples are
-              displayed in graph but with a relatively low confidence in the
-              quality of their relations. The default relation confidence is set
+              Entity Confidence: Including high, medium and low three levels.
+              High means that the system displays entities with higher quality
+              but smaller quantity, while low represents entities with lower
+              quality but larger quantity. The default entity confidence is set
               to medium.
             </p>
             <p>
@@ -127,10 +126,27 @@
               <v-select
                 v-model="analysisStrength"
                 :loading="isLoading"
-                :items="['Weak', 'Medium', 'Strong']"
-                label="Relation Confidence"
+                :items="['Low', 'Medium', 'High']"
+                label="Entity Confidence"
                 outlined
-              ></v-select>
+              >
+                <template v-slot:append-outer>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on }">
+                      <span v-on="on">
+                        <v-icon right>mdi-help-circle-outline</v-icon>
+                      </span>
+                    </template>
+                    <span>
+                      High means that the system displays entities with higher
+                      <br />
+                      quality but smaller quantity, while low represents
+                      <br />
+                      entities with lower quality but larger quantity.
+                    </span>
+                  </v-tooltip>
+                </template>
+              </v-select>
               <!-- analysis btn -->
               <v-btn
                 color="primary"
@@ -175,7 +191,7 @@
                 color="indigo lighten-1"
               ></v-radio>
             </v-radio-group>
-            <p>Advance Function:</p>
+            <p>Advanced Function:</p>
             <v-radio-group v-model="classificationSelected" row>
               <v-radio
                 label="Entity Type"
@@ -245,6 +261,13 @@ export default {
     },
     isLoading() {
       return this.$store.state.ShareVar.isLoading
+    },
+    reqAnalysisStrength() {
+      let res
+      if (this.analysisStrength === 'Low') res = 'Weak'
+      else if (this.analysisStrength === 'Medium') res = 'Medium'
+      else if (this.analysisStrength === 'High') res = 'Strong'
+      return res
     }
   },
   watch: {
@@ -330,7 +353,7 @@ export default {
             params: {
               category: this.select1,
               identity: this.select2,
-              strength: this.analysisStrength
+              strength: this.reqAnalysisStrength
             }
           })
           if (data.graph.nodes.length !== 0 && data.graph.edges.length !== 0) {
@@ -384,7 +407,7 @@ export default {
           data = await this.$axios.$get('/api/v1/knowledgeGraph', {
             params: {
               text,
-              strength: this.analysisStrength
+              strength: this.reqAnalysisStrength
             }
           })
           if (data.graph.nodes.length !== 0 && data.graph.edges.length !== 0) {

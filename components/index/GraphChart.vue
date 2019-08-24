@@ -16,7 +16,10 @@ export default {
       // the ECharts Option
       option: {
         title: {
-          text: 'Knowledge Graph'
+          text: 'Knowledge Graph',
+          textStyle: {
+            fontSize: 20
+          }
         },
         legend: { bottom: 15 },
         animationDurationUpdate: 1500,

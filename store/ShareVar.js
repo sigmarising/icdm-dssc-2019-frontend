@@ -9,53 +9,114 @@ export const state = () => ({
   isLoading: false,
   echartsNodes: [
     {
-      name: 'car',
-      value: 10,
-      category: 'c1',
-      symbolSize: 30
+      name: 'Junwei Sun',
+      value: 1,
+      symbolSize: 25,
+      category: ''
     },
     {
-      name: 'people',
-      value: 10,
-      category: 'c1',
-      symbolSize: 20
+      name: 'BUPT-IBL',
+      value: 5,
+      symbolSize: 50,
+      category: ''
     },
     {
-      name: 'store',
-      value: 10,
-      category: 'c2',
-      symbolSize: 50
+      name: 'Yun Zhang',
+      value: 1,
+      symbolSize: 25,
+      category: ''
+    },
+    {
+      name: 'Ting Bai',
+      value: 1,
+      symbolSize: 25,
+      category: ''
+    },
+    {
+      name: 'Bin Wu',
+      value: 1,
+      symbolSize: 25,
+      category: ''
+    },
+    {
+      name: '2019 ICDM/ICBK KGC Contest',
+      value: 1,
+      symbolSize: 50,
+      category: ''
     }
   ],
   echartsEdges: [
     {
-      source: 'car',
-      target: 'people',
+      source: 'Junwei Sun',
+      target: 'BUPT-IBL',
       label: {
-        formatter: 'drive'
+        formatter: 'belong to'
       }
     },
     {
-      source: 'car',
-      target: 'store',
+      source: 'BUPT-IBL',
+      target: '2019 ICDM/ICBK KGC Contest',
       label: {
-        formatter: 'at'
+        formatter: 'participate in'
+      }
+    },
+    {
+      source: 'Yun Zhang',
+      target: 'BUPT-IBL',
+      label: {
+        formatter: 'belong to'
+      }
+    },
+    {
+      source: 'Ting Bai',
+      target: 'BUPT-IBL',
+      label: {
+        formatter: 'belong to'
+      }
+    },
+    {
+      source: 'Bin Wu',
+      target: 'BUPT-IBL',
+      label: {
+        formatter: 'belong to'
       }
     }
   ],
   echartsClassification: {
     entityCategory: {
-      car: 'Name',
-      store: 'Location'
+      'Junwei Sun': 'PERSON',
+      'BUPT-IBL': 'TEAM',
+      'Yun Zhang': 'PERSON',
+      'Ting Bai': 'PERSON',
+      'Bin Wu': 'PERSON',
+      '2019 ICDM/ICBK KGC Contest': 'CONTEST'
     },
     communitiesDetection: {
-      car: 'community 1',
-      store: 'community 2'
+      'Junwei Sun': 'community 1',
+      'BUPT-IBL': 'community 1',
+      'Yun Zhang': 'community 1',
+      'Ting Bai': 'community 1',
+      'Bin Wu': 'community 1',
+      '2019 ICDM/ICBK KGC Contest': 'community 1'
     }
   },
   echartsCategories: {
-    entityCategory: [{ name: 'Name' }, { name: 'Location' }],
-    communitiesDetection: [{ name: 'community 1' }, { name: 'community 2' }]
+    entityCategory: [
+      {
+        name: 'CONTEST'
+      },
+      {
+        name: 'PERSON'
+      },
+      {
+        name: 'TEAM'
+      }
+    ],
+    communitiesDetection: [
+      {
+        name: 'community 1'
+      }
+    ]
   }
 })
 
