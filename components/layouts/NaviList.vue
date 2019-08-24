@@ -25,8 +25,8 @@ export default {
       linkItem: 0,
       // the linked list item nav
       items: [
-        { text: 'Index Page', icon: 'mdi-home', to: '/' },
-        { text: 'About', icon: 'mdi-at', to: '/about' }
+        { text: 'Home', icon: 'mdi-home', to: '/' },
+        { text: 'About KROAS', icon: 'mdi-at', to: '/about' }
       ]
     }
   }

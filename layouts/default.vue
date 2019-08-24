@@ -49,7 +49,7 @@
     <!-- the footer in default -->
     <v-footer class="d-flex justify-center" padless>
       <span class="font-weight-light">
-        &copy; 2019 BUPT-DSSC &nbsp;&nbsp;&nbsp; All Rights Reserved
+        &copy; 2019 TEAM BUPT-IBL
       </span>
     </v-footer>
   </v-app>

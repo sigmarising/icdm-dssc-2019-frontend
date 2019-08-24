@@ -12,29 +12,38 @@
         <v-card flat>
           <v-card-text>
             <p>
-              Welcome to the <b>KROAS</b> (<b>K</b>nowledge g<b>R</b>aph
-              <b>O</b>nline <b>A</b>nalysis <b>S</b>ystem).
+              Welcome to <b>KROAS</b> (<b>K</b>nowledge g<b>R</b>aph
+              <b>O</b>nline <b>A</b>nalysis <b>S</b>ystem) of BUPT-IBL team for
+              2019 ICDM Contest.
             </p>
-
             <p>
-              <b>KROAS</b> can run on any device, such as PC, tablet, and phone.
-            </p>
-
-            <p>
-              There are some usage of this website.
-            </p>
-
-            <p>
-              In <b>ARTICLE</b> tab, you can select the article and show it
-              knowledge graph. <br />
-              In <b>MANUAL</b> tab, you can type in the textarea or upload text
-              from a file. Then you can have a look at it's knowledge graph.
+              Instructions:
               <br />
-              In <b>GRAPH</b> tab, you can control the layout of charts.
+              Input Data: Selecting data from Contest Dataset
+              (icdm_contest_data.csv), Upload File and Input Text.
             </p>
-
             <p>
-              Just enjoy youself!
+              Relation Confidence: Including strong, medium and weak three
+              levels. Strong means that we only display the triples with high
+              quality relations, while weak represents that all the triples are
+              displayed in graph but with a relatively low confidence in the
+              quality of their relations. The default relation confidence is set
+              to medium.
+            </p>
+            <p>
+              Generate Graph: Generating the corresponding knowledge graph based
+              on the Input Data and Relation Confidence.
+            </p>
+            <p>
+              Graph Layout: Including graph display modes: Force or Circular,
+              and relation display modes: undirected or directed (from source to
+              target).
+            </p>
+            <p>
+              Advanced Function: Entity Type and Community Detection. The type
+              of an entity is recognized by different colors (eg., PERSON, ORG,
+              etc). Community detection shows the communitiy clusters based on
+              louvain algorithm.
             </p>
           </v-card-text>
         </v-card>
@@ -44,7 +53,7 @@
         <v-card flat>
           <v-card-text>
             <p>
-              Select the input source form:
+              Data Source:
             </p>
             <!-- input control radios -->
             <v-radio-group v-model="inputSelected" row>
@@ -54,12 +63,12 @@
                 color="blue darken-3"
               ></v-radio>
               <v-radio
-                label="File"
+                label="Upload File"
                 value="file"
                 color="green darken-3"
               ></v-radio>
               <v-radio
-                label="Textarea"
+                label="Input Text"
                 value="textarea"
                 color="red darken-3"
               ></v-radio>
@@ -69,7 +78,7 @@
             <div v-show="inputSelected === 'article'">
               <v-autocomplete
                 v-model="select1"
-                label="Article Industry"
+                label="Industry"
                 autocomplete="off"
                 :items="selectItems1"
                 :loading="isLoading"
@@ -78,7 +87,7 @@
               />
               <v-autocomplete
                 v-model="select2"
-                label="Article Index"
+                label="Index"
                 autocomplete="off"
                 :items="selectItems2"
                 :disabled="isSelect2Disable"
@@ -119,7 +128,7 @@
                 v-model="analysisStrength"
                 :loading="isLoading"
                 :items="['Weak', 'Medium', 'Strong']"
-                label="Analysis Strength"
+                label="Relation Confidence"
                 outlined
               ></v-select>
               <!-- analysis btn -->
@@ -130,7 +139,7 @@
                 :loading="isLoading"
                 @click="analysisText"
               >
-                <v-icon left>mdi-camera-iris</v-icon> Analysis
+                <v-icon left>mdi-camera-iris</v-icon> Generate Graph
               </v-btn>
             </div>
 
@@ -140,7 +149,7 @@
             <div style="height: 5px"></div>
 
             <!-- graph control -->
-            <p>Layout of the graph:</p>
+            <p>Graph Layout:</p>
             <v-radio-group v-model="layoutSelected" row>
               <v-radio
                 label="Force"
@@ -153,7 +162,7 @@
                 color="purple darken-1"
               ></v-radio>
             </v-radio-group>
-            <p>Undirected/Directed of the graph:</p>
+            <p>Edge Direction:</p>
             <v-radio-group v-model="directedSelected" row>
               <v-radio
                 label="Undirected"
@@ -161,15 +170,15 @@
                 color="orange darken-4"
               ></v-radio>
               <v-radio
-                label="Directed"
+                label="Directed (Source to Target)"
                 value="directed"
                 color="indigo lighten-1"
               ></v-radio>
             </v-radio-group>
-            <p>Node Classification of Graph:</p>
+            <p>Advance Function:</p>
             <v-radio-group v-model="classificationSelected" row>
               <v-radio
-                label="Entity Category"
+                label="Entity Type"
                 value="entity"
                 color="lime darken-3"
               ></v-radio>
@@ -324,22 +333,30 @@ export default {
               strength: this.analysisStrength
             }
           })
-          this.adjustNodeSize(data.graph.nodes)
-          this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
-          this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
-          this.$store.commit(
-            'ShareVar/setEchartsClassification',
-            data.graph.classification
-          )
-          this.$store.commit(
-            'ShareVar/setEchartsCategories',
-            data.graph.categories
-          )
+          if (data.graph.nodes.length !== 0 && data.graph.edges.length !== 0) {
+            this.adjustNodeSize(data.graph.nodes)
+            this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
+            this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
+            this.$store.commit(
+              'ShareVar/setEchartsClassification',
+              data.graph.classification
+            )
+            this.$store.commit(
+              'ShareVar/setEchartsCategories',
+              data.graph.categories
+            )
 
-          this.$store.commit('ShareVar/updateDateTime')
-
-          // success notice
-          this.successNotice("Get Article' info Success!")
+            this.$store.commit('ShareVar/updateDateTime')
+            // success notice
+            this.successNotice("Get Article' info Success!")
+          } else {
+            Notification.info({
+              title: 'Notice',
+              message: 'No triple was extracted from the input text.',
+              duration: 0,
+              showClose: true
+            })
+          }
         } catch (error) {
           data = {}
           Notification.error({
@@ -370,22 +387,30 @@ export default {
               strength: this.analysisStrength
             }
           })
-          this.adjustNodeSize(data.graph.nodes)
-          this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
-          this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
-          this.$store.commit(
-            'ShareVar/setEchartsClassification',
-            data.graph.classification
-          )
-          this.$store.commit(
-            'ShareVar/setEchartsCategories',
-            data.graph.categories
-          )
+          if (data.graph.nodes.length !== 0 && data.graph.edges.length !== 0) {
+            this.adjustNodeSize(data.graph.nodes)
+            this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
+            this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
+            this.$store.commit(
+              'ShareVar/setEchartsClassification',
+              data.graph.classification
+            )
+            this.$store.commit(
+              'ShareVar/setEchartsCategories',
+              data.graph.categories
+            )
 
-          this.$store.commit('ShareVar/updateDateTime')
-
-          // success notice
-          this.successNotice('Analysis text Success!')
+            this.$store.commit('ShareVar/updateDateTime')
+            // success notice
+            this.successNotice('Analysis text Success!')
+          } else {
+            Notification.info({
+              title: 'Notice',
+              message: 'No triple was extracted from the input text.',
+              duration: 0,
+              showClose: true
+            })
+          }
         } catch (error) {
           data = {}
           Notification.error({

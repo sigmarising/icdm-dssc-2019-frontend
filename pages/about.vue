@@ -10,15 +10,27 @@
         >
           <v-card class="elevation-2">
             <v-card-title class="headline">
-              <b>About the KROAS Project</b>
+              <b>KROAS Project</b>
             </v-card-title>
             <v-divider></v-divider>
             <v-card-text>
-              the <b>K</b>nowledge g<b>R</b>aph <b>O</b>nline <b>A</b>nalysis
-              <b>S</b>ystem is the web application of team BUPT-IBL's (
-              belonging to BUPT-DSSC Group 2 ) Entries for ICDM2019. The Model
-              Algorithm is created by team leader Junwei Sun, instructed by Ting
-              Bai and Bin Wu. The full stack web app is developed by Yun Zhang.
+              <p>
+                <b>KROAS</b> (<b>K</b>nowledge g<b>R</b>aph <b>O</b>nline
+                <b>A</b>nalysis <b>S</b>ystem) is a web application build by
+                BUPT-IBL team for 2019 ICDM Contest. The application is able to
+                generate a knowledge graph from an input text and display the
+                graph by visualization tools.
+              </p>
+              <p>
+                Please feel free to contact us if you have any question.
+              </p>
+              <p>
+                BUPT-IBL Team: Junwei Sun, Yun Zhang, Bin Wu, Ting Bai
+                <br />
+                Email: sjw1996@bupt.edu.cn
+                <br />
+                Tel: +86 15601266855
+              </p>
             </v-card-text>
           </v-card>
         </v-timeline-item>
@@ -156,7 +168,7 @@
                     >
                       FrontEnd
                     </a> </b
-                  >: icdm-dssc-2019-frontend
+                  >: icdm-2019-frontend
                 </li>
                 <li>
                   <b>
@@ -167,7 +179,7 @@
                     >
                       BackEnd
                     </a> </b
-                  >: icdm-dssc-2019-backend
+                  >: icdm-2019-backend
                 </li>
               </ul>
               <b>
@@ -179,7 +191,7 @@
                 >
                   Following the Author
                 </a> </b
-              >: Yun Zhang, a developer who works in BUPT-DSSC Group 2.
+              >: Yun Zhang, a team member of BUPT-IBL.
             </v-card-text>
           </v-card>
         </v-timeline-item>
