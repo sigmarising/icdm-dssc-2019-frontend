@@ -27,7 +27,7 @@ export default {
             layout: this.$store.state.ShareVar.graphType,
             force: {
               repulsion: 400,
-              edgeLength: 150
+              edgeLength: 200
             },
             circular: {
               rotateLabel: true
