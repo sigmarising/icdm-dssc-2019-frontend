@@ -87,46 +87,58 @@ export default {
     edgeSymbol() {
       return this.$store.getters['ShareVar/edgeSymbol']
     },
-    isLoading() {
-      return this.$store.state.ShareVar.isLoading
+    classification() {
+      return this.$store.getters['ShareVar/classifyKey']
     }
+    // isLoading() {
+    //   return this.$store.state.ShareVar.isLoading
+    // }
   },
   watch: {
     dateTime() {
-      const nodes = this.$store.state.ShareVar.echartsNodes
-      const edges = this.$store.state.ShareVar.echartsEdges
-      const categories = this.$store.state.ShareVar.echartsCategories
+      this.chart.showLoading()
 
-      this.option.series[0].nodes = nodes
-      this.option.series[0].edges = edges
-      this.option.series[0].categories = categories
+      this.updateData()
 
+      this.chart.hideLoading()
+      this.chart.setOption(this.option, true)
+    },
+    // The Fucking Teacher Ting Bai's Demand
+    // Force to make classification responsitive
+    classification() {
+      this.chart.showLoading()
+
+      this.updateData()
+
+      this.chart.hideLoading()
       this.chart.setOption(this.option, true)
     },
     graphLayoutType() {
+      this.chart.showLoading()
       this.option.series[0].layout = this.graphLayoutType
-
+      this.chart.hideLoading()
       this.chart.setOption(this.option, true)
     },
     edgeSymbol() {
+      this.chart.showLoading()
       this.option.series[0].edgeSymbol = this.edgeSymbol
-
+      this.chart.hideLoading()
       this.chart.setOption(this.option, true)
-    },
-    isLoading(val) {
-      if (val) {
-        this.chart.showLoading()
-      } else {
-        this.chart.hideLoading()
-      }
     }
+    // isLoading(val) {
+    //   if (val) {
+    //     this.chart.showLoading()
+    //   } else {
+    //     this.chart.hideLoading()
+    //   }
+    // }
   },
   mounted() {
     // create ECharts Instance
     this.chart = echarts.init(this.$refs.chart)
     // binding resize handler
     window.addEventListener('resize', this.resizeHandler)
-
+    this.updateData()
     this.chart.setOption(this.option)
   },
   beforeDestroy() {
@@ -138,6 +150,33 @@ export default {
   methods: {
     resizeHandler() {
       this.chart.resize()
+    },
+    updateData() {
+      const classifyKey = this.classification
+      this.option.series[0].nodes = []
+      this.option.series[0].edges = []
+      this.option.series[0].categories = []
+
+      const vuexNodes = this.$store.state.ShareVar.echartsNodes
+      const vuexEdges = this.$store.state.ShareVar.echartsEdges
+      const vuexClassification = this.$store.state.ShareVar
+        .echartsClassification
+      const vuexCategories = this.$store.state.ShareVar.echartsCategories
+
+      const thisNodes = []
+
+      for (const val of vuexNodes) {
+        thisNodes.push({
+          name: val.name,
+          value: val.value,
+          category: vuexClassification[classifyKey][val.name],
+          symbolSize: val.symbolSize
+        })
+      }
+
+      this.option.series[0].nodes = thisNodes
+      this.option.series[0].edges = vuexEdges
+      this.option.series[0].categories = vuexCategories[classifyKey]
     }
   }
 }

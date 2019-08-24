@@ -4,6 +4,7 @@ export const state = () => ({
   graphType: 'force',
   inputSelect: 'article',
   directedSelected: 'undirected',
+  classificationSelected: 'entity',
   // loading control of all input
   isLoading: false,
   echartsNodes: [
@@ -42,13 +43,31 @@ export const state = () => ({
       }
     }
   ],
-  echartsCategories: [{ name: 'c1' }, { name: 'c2' }]
+  echartsClassification: {
+    entityCategory: {
+      car: 'Name',
+      store: 'Location'
+    },
+    communitiesDetection: {
+      car: 'community 1',
+      store: 'community 2'
+    }
+  },
+  echartsCategories: {
+    entityCategory: [{ name: 'Name' }, { name: 'Location' }],
+    communitiesDetection: [{ name: 'community 1' }, { name: 'community 2' }]
+  }
 })
 
 export const getters = {
   edgeSymbol(state) {
     if (state.directedSelected === 'undirected') return ['none', 'none']
     else if (state.directedSelected === 'directed') return ['none', 'arrow']
+  },
+  classifyKey(state) {
+    if (state.classificationSelected === 'entity') return 'entityCategory'
+    else if (state.classificationSelected === 'community')
+      return 'communitiesDetection'
   }
 }
 
@@ -68,6 +87,9 @@ export const mutations = {
   setDirectedSelected(state, type) {
     state.directedSelected = type
   },
+  setClassificationSelected(state, type) {
+    state.classificationSelected = type
+  },
   setIsLoading(state, val) {
     state.isLoading = val
   },
@@ -76,6 +98,9 @@ export const mutations = {
   },
   setEchartsEdges(state, val) {
     state.echartsEdges = val
+  },
+  setEchartsClassification(state, val) {
+    state.echartsClassification = val
   },
   setEchartsCategories(state, val) {
     state.echartsCategories = val

@@ -17,6 +17,10 @@
             </p>
 
             <p>
+              <b>KROAS</b> can run on any device, such as PC, tablet, and phone.
+            </p>
+
+            <p>
               There are some usage of this website.
             </p>
 
@@ -118,14 +122,6 @@
                 label="Analysis Strength"
                 outlined
               ></v-select>
-              <!-- Node classification -->
-              <v-select
-                v-model="analysisCategory"
-                :loading="isLoading"
-                :items="['Entity Category', 'Communities Detection']"
-                label="Node classification"
-                outlined
-              ></v-select>
               <!-- analysis btn -->
               <v-btn
                 color="primary"
@@ -170,6 +166,19 @@
                 color="indigo lighten-1"
               ></v-radio>
             </v-radio-group>
+            <p>Node Classification of Graph:</p>
+            <v-radio-group v-model="classificationSelected" row>
+              <v-radio
+                label="Entity Category"
+                value="entity"
+                color="lime darken-3"
+              ></v-radio>
+              <v-radio
+                label="Community Detection"
+                value="community"
+                color="pink darken-1"
+              ></v-radio>
+            </v-radio-group>
           </v-card-text>
         </v-card>
       </v-tab-item>
@@ -208,12 +217,12 @@ export default {
       layoutSelected: this.$store.state.ShareVar.graphType,
       // v-model for directed Selected radio
       directedSelected: this.$store.state.ShareVar.directedSelected,
+      // v-model for classification radio
+      classificationSelected: this.$store.state.ShareVar.classificationSelected,
       // v-model for files
       files: null,
       // v-model for strength
       analysisStrength: 'Medium',
-      // v-model for Node classification
-      analysisCategory: 'Entity Category',
       // text in the file
       fileText: '',
       selectItems1: [],
@@ -243,6 +252,9 @@ export default {
     },
     directedSelected(val) {
       this.$store.commit('ShareVar/setDirectedSelected', val)
+    },
+    classificationSelected(val) {
+      this.$store.commit('ShareVar/setClassificationSelected', val)
     },
     select1(val) {
       if (val) this.selectItems2 = this.categories[val]
@@ -309,18 +321,21 @@ export default {
             params: {
               category: this.select1,
               identity: this.select2,
-              strength: this.analysisStrength,
-              categoryType: this.analysisCategory
+              strength: this.analysisStrength
             }
           })
           this.adjustNodeSize(data.graph.nodes)
-          // this.$store.commit('ShareVar/setInputText', data.content)
           this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
           this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
+          this.$store.commit(
+            'ShareVar/setEchartsClassification',
+            data.graph.classification
+          )
           this.$store.commit(
             'ShareVar/setEchartsCategories',
             data.graph.categories
           )
+
           this.$store.commit('ShareVar/updateDateTime')
 
           // success notice
@@ -352,17 +367,21 @@ export default {
           data = await this.$axios.$get('/api/v1/knowledgeGraph', {
             params: {
               text,
-              strength: this.analysisStrength,
-              category: this.analysisCategory
+              strength: this.analysisStrength
             }
           })
           this.adjustNodeSize(data.graph.nodes)
           this.$store.commit('ShareVar/setEchartsNodes', data.graph.nodes)
           this.$store.commit('ShareVar/setEchartsEdges', data.graph.edges)
           this.$store.commit(
+            'ShareVar/setEchartsClassification',
+            data.graph.classification
+          )
+          this.$store.commit(
             'ShareVar/setEchartsCategories',
             data.graph.categories
           )
+
           this.$store.commit('ShareVar/updateDateTime')
 
           // success notice
