@@ -38,10 +38,16 @@
     <v-dialog v-model="dialog" max-width="600">
       <v-card>
         <v-card-title class="headline">
-          {{ dialogTitle }}
+          Tipes about our Knowledge Graph:
         </v-card-title>
         <v-card-text>
-          {{ dialogText }}
+          Different colors of the nodes represents different type (when Entity
+          Type function is selected) or different community (when Community
+          Detection function is selected). Users can click the legends at the
+          bottom of the graph to hide all the nodes (and related edges) of this
+          type or community.
+          <br />
+          The size of the nodes are proportional to their PageRank value.
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

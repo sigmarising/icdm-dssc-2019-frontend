@@ -23,15 +23,15 @@
               (icdm_contest_data.csv), Upload File and Input Text.
             </p>
             <p>
-              <b>Analysis Confidence:</b> Including high, medium and low three
-              levels. High means that the system displays entities with higher
-              quality but smaller quantity, while low represents entities with
-              lower quality but larger quantity. The default analysis confidence
-              is set to low.
+              <b>Analysis Strength:</b> Including strong, medium and weak three
+              levels. Strong means that the system displays entities with higher
+              quality but smaller quantity, while weak represents entities with
+              lower quality but larger quantity. The default analysis strength
+              is set to weak.
             </p>
             <p>
               <b>Generate Graph:</b> Generating the corresponding knowledge
-              graph based on the Input Data and Analysis Confidence.
+              graph based on the Input Data and Analysis Strength.
             </p>
             <p>
               <b>Graph Layout:</b> Including graph display modes: Force or
@@ -126,8 +126,8 @@
               <v-select
                 v-model="analysisStrength"
                 :loading="isLoading"
-                :items="['Low', 'Medium', 'High']"
-                label="Analysis Confidence"
+                :items="['Weak', 'Medium', 'Strong']"
+                label="Analysis Strength"
                 outlined
               >
                 <template v-slot:append-outer>
@@ -138,13 +138,13 @@
                       </span>
                     </template>
                     <span>
-                      High means that the system displays entities with
+                      Strong means that the system displays entities
                       <br />
-                      higher quality but smaller quantity, while low
+                      with higher quality but smaller quantity, while
                       <br />
-                      represents entities with lower quality but larger
+                      Weak represents entities with lower quality but
                       <br />
-                      quantity.
+                      larger quantity.
                     </span>
                   </v-tooltip>
                 </template>
@@ -249,7 +249,7 @@ export default {
       // v-model for files
       files: null,
       // v-model for strength
-      analysisStrength: 'Low',
+      analysisStrength: 'Weak',
       // text in the file
       fileText: '',
       selectItems1: [],
@@ -263,13 +263,6 @@ export default {
     },
     isLoading() {
       return this.$store.state.ShareVar.isLoading
-    },
-    reqAnalysisStrength() {
-      let res
-      if (this.analysisStrength === 'Low') res = 'Weak'
-      else if (this.analysisStrength === 'Medium') res = 'Medium'
-      else if (this.analysisStrength === 'High') res = 'Strong'
-      return res
     }
   },
   watch: {
@@ -355,7 +348,7 @@ export default {
             params: {
               category: this.select1,
               identity: this.select2,
-              strength: this.reqAnalysisStrength
+              strength: this.analysisStrength
             }
           })
           if (data.graph.nodes.length !== 0 && data.graph.edges.length !== 0) {
@@ -409,7 +402,7 @@ export default {
           data = await this.$axios.$get('/api/v1/knowledgeGraph', {
             params: {
               text,
-              strength: this.reqAnalysisStrength
+              strength: this.analysisStrength
             }
           })
           if (data.graph.nodes.length !== 0 && data.graph.edges.length !== 0) {
