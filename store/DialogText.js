@@ -1,8 +1,8 @@
 export const state = () => ({
   title: 'The Information About Graph Chart',
-  text: ` Let Google help apps determine location.
-  This means sending anonymous location data to Google,
-  even when no apps are running.`
+  text: `We Support three analysis confidence to generate the graph.
+  The edge can be directed or undirected depending on your settings.
+  The node's color specify its category, which can be Entity Type or Community Detection.`
 })
 
 export const mutations = {}

@@ -17,32 +17,32 @@
               2019 ICDM Contest.
             </p>
             <p>
-              Instructions:
+              <b>Instructions:</b>
               <br />
-              Input Data: Selecting data from Contest Dataset
+              <b>Input Data:</b> Selecting data from Contest Dataset
               (icdm_contest_data.csv), Upload File and Input Text.
             </p>
             <p>
-              Entity Confidence: Including high, medium and low three levels.
-              High means that the system displays entities with higher quality
-              but smaller quantity, while low represents entities with lower
-              quality but larger quantity. The default entity confidence is set
-              to medium.
+              <b>Analysis Confidence:</b> Including high, medium and low three
+              levels. High means that the system displays entities with higher
+              quality but smaller quantity, while low represents entities with
+              lower quality but larger quantity. The default analysis confidence
+              is set to low.
             </p>
             <p>
-              Generate Graph: Generating the corresponding knowledge graph based
-              on the Input Data and Entity Confidence.
+              <b>Generate Graph:</b> Generating the corresponding knowledge
+              graph based on the Input Data and Analysis Confidence.
             </p>
             <p>
-              Graph Layout: Including graph display modes: Force or Circular,
-              and relation display modes: undirected or directed (from source to
-              target).
+              <b>Graph Layout:</b> Including graph display modes: Force or
+              Circular, and relation display modes: undirected or directed (from
+              source to target).
             </p>
             <p>
-              Advanced Function: Entity Type and Community Detection. The type
-              of an entity is recognized by different colors (eg., PERSON, ORG,
-              etc). Community detection shows the communitiy clusters based on
-              louvain algorithm.
+              <b>Advanced Function:</b> Entity Type and Community Detection. The
+              type of an entity is recognized by different colors (eg., PERSON,
+              ORG, etc). Community detection shows the communitiy clusters based
+              on louvain algorithm.
             </p>
           </v-card-text>
         </v-card>
@@ -127,7 +127,7 @@
                 v-model="analysisStrength"
                 :loading="isLoading"
                 :items="['Low', 'Medium', 'High']"
-                label="Entity Confidence"
+                label="Analysis Confidence"
                 outlined
               >
                 <template v-slot:append-outer>
@@ -249,7 +249,7 @@ export default {
       // v-model for files
       files: null,
       // v-model for strength
-      analysisStrength: 'Medium',
+      analysisStrength: 'Low',
       // text in the file
       fileText: '',
       selectItems1: [],
