@@ -31,7 +31,7 @@
             </p>
             <p>
               Generate Graph: Generating the corresponding knowledge graph based
-              on the Input Data and Relation Confidence.
+              on the Input Data and Entity Confidence.
             </p>
             <p>
               Graph Layout: Including graph display modes: Force or Circular,
@@ -57,7 +57,7 @@
             <!-- input control radios -->
             <v-radio-group v-model="inputSelected" row>
               <v-radio
-                label="From Dataset"
+                label="Dataset"
                 value="article"
                 color="blue darken-3"
               ></v-radio>
@@ -138,11 +138,13 @@
                       </span>
                     </template>
                     <span>
-                      High means that the system displays entities with higher
+                      High means that the system displays entities with
                       <br />
-                      quality but smaller quantity, while low represents
+                      higher quality but smaller quantity, while low
                       <br />
-                      entities with lower quality but larger quantity.
+                      represents entities with lower quality but larger
+                      <br />
+                      quantity.
                     </span>
                   </v-tooltip>
                 </template>
@@ -371,7 +373,7 @@ export default {
 
             this.$store.commit('ShareVar/updateDateTime')
             // success notice
-            this.successNotice("Get Article' info Success!")
+            this.successNotice('Generate Graph Finished!')
           } else {
             Notification.info({
               title: 'Notice',
@@ -425,7 +427,7 @@ export default {
 
             this.$store.commit('ShareVar/updateDateTime')
             // success notice
-            this.successNotice('Analysis text Success!')
+            this.successNotice('Generate Graph Finished!')
           } else {
             Notification.info({
               title: 'Notice',
